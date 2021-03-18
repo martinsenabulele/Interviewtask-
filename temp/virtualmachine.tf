@@ -30,7 +30,7 @@ resource "azurerm_network_interface" "tf_nic_interface" {
     private_ip_address_allocation = "Dynamic"
   }
 }
-#Network security group also is not part of the module. so Need to check for the way to connect NSG to VM./ vNET
+#Network security group also is not part of the module. there is a  Need to check for the way to connect NSG to VM./ vNET
 resource "azurerm_windows_virtual_machine" "tf_vm" {
   name                = "tf-vm"
   resource_group_name = azurerm_resource_group.tf_rg.name
