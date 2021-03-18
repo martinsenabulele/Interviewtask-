@@ -22,6 +22,10 @@ Azure Availabilty set/zone option will be use to ensure HA and fault tolerent
 
 
 How would you make this deployment more secure? 
+For Secueirty enhancement will can use :
+i. Native threat Detection (& SIEM) to simplify threat detection and response.
+ii. Passwordless and multi-factor authentication(MFA) for strong authentication assurance
+iii. Native firewall and network security for protection of systems and data, we can use Azure defender, Firewall and WAF.
 
 
 How would you make this deployment cloud agnostic?
