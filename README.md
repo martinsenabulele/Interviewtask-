@@ -6,8 +6,9 @@ How to run this code.
 1. Install Azure CLI on your machine
 2. provide login credentials using az login. 
 3. Once login is successful. perform 
-    a. terraform init. 
-    b. terraform apply
+    a. terraform init.
+    b. terraform plan ( to see your desire state) 
+    c. terraform apply
     Note: assumption that terraform is already installed and configured and all terraform files related to the excercise are downloaded using 'git clone'
 
 Question: To restrict particular user to have bastion host control and from particular IP address. 
@@ -20,7 +21,7 @@ How would you make this deployment fault tolerant and highly available?
 Azure Availabilty set/zone option will be use to ensure HA and fault tolerent 
 
 
-How would you make this deployment more secure?
+How would you make this deployment more secure? 
 
 
 How would you make this deployment cloud agnostic?
