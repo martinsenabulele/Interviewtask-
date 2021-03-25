@@ -7,8 +7,8 @@ resource "azurerm_network_security_group" "frontend-linux-vm-nsg" {
   resource_group_name = azurerm_resource_group.network-rg.name
 
   security_rule {
-    name                       = "allow-http"
-    description                = "allow-http"
+    name                       = "allow-https"
+    description                = "allow-https"
     priority                   = 110
     direction                  = "Inbound"
     access                     = "Allow"
