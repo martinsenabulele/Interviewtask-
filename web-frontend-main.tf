@@ -1,7 +1,7 @@
 
 # Create Security Group to access web
 resource "azurerm_network_security_group" "frontend-linux-vm-nsg" {
-  depends_on=[azurerm_resource_group.network-rg]
+  depends_on = [azurerm_resource_group.network-rg]
   name = "${var.app_name}-${var.environment}-frontend-linux-vm-nsg"
   location            = azurerm_resource_group.network-rg.location
   resource_group_name = azurerm_resource_group.network-rg.name
@@ -71,6 +71,18 @@ resource "azurerm_network_security_group" "frontend-linux-vm-nsg" {
     environment = var.environment
   }
 }
+# Get a Static Public IP
+resource "azurerm_public_ip" "web-linux-vm-ip" {
+  depends_on=[azurerm_resource_group.network-rg]
+  name = "linux-vm-ip"
+  location            = azurerm_resource_group.network-rg.location
+  resource_group_name = azurerm_resource_group.network-rg.name
+  allocation_method   = "Static"
+  
+  tags = { 
+    environment = var.environment
+  }
+}
 # Associate the web NSG with the subnet
 resource "azurerm_subnet_network_security_group_association" "frontend-linux-vm-nsg-association" {
   depends_on=[azurerm_network_security_group.frontend-linux-vm-nsg]
@@ -88,6 +100,7 @@ resource "azurerm_network_interface" "frontend-linux-vm-nic" {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.network-frontend-subnet.id
     private_ip_address_allocation = "Dynamic"
+    public_ip_address_id = azurerm_public_ip.web-linux-vm-ip.id
   }
   tags = { 
     application = var.app_name
