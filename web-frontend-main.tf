@@ -1,14 +1,14 @@
 
 # Create Security Group to access web
 resource "azurerm_network_security_group" "frontend-linux-vm-nsg" {
-  depends_on = [azurerm_resource_group.network-rg]
+  depends_on=[azurerm_resource_group.network-rg]
   name = "${var.app_name}-${var.environment}-frontend-linux-vm-nsg"
   location            = azurerm_resource_group.network-rg.location
   resource_group_name = azurerm_resource_group.network-rg.name
 
   security_rule {
-    name                       = "allow-https"
-    description                = "allow-https"
+    name                       = "allow-http"
+    description                = "allow-http"
     priority                   = 110
     direction                  = "Inbound"
     access                     = "Allow"
@@ -39,8 +39,8 @@ resource "azurerm_network_security_group" "frontend-linux-vm-nsg" {
     protocol                   = "Tcp"
     source_port_range          = "*"
     destination_port_range     = "80"
-    source_address_prefix      = azurerm_linux_virtual_machine.backend-linux-vm.private_ip_address
-    destination_address_prefix = "*"
+    source_address_prefix      = azurerm_linux_virtual_machine.frontend-linux-vm.private_ip_address
+    destination_address_prefix = azurerm_linux_virtual_machine.backend-linux-vm.private_ip_address
   }
     security_rule {
     name                       = "default-deny-ingress"
@@ -74,7 +74,7 @@ resource "azurerm_network_security_group" "frontend-linux-vm-nsg" {
 # Get a Static Public IP
 resource "azurerm_public_ip" "web-linux-vm-ip" {
   depends_on=[azurerm_resource_group.network-rg]
-  name = "linux-vm-ip"
+  name = "linux-public-vm-ip"
   location            = azurerm_resource_group.network-rg.location
   resource_group_name = azurerm_resource_group.network-rg.name
   allocation_method   = "Static"
@@ -130,7 +130,7 @@ resource "azurerm_linux_virtual_machine" "frontend-linux-vm" {
   computer_name = "linux-frontend-vm"
   admin_username = var.web-linux-admin-username
   admin_password = var.web-linux-admin-password
-  custom_data = base64encode(data.template_file.linux-vm-cloud-init.rendered)
+  custom_data = base64encode(data.template_file.linux-vm-frontend-init.rendered)
   disable_password_authentication = false
   tags = {
     application = var.app_name

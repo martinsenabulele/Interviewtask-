@@ -30,3 +30,5 @@ iii. Native firewall and network security for protection of systems and data, we
 
 How would you make this deployment cloud agnostic?
 Using Infrastruture as Code (IaC) tools like Terraform to allow resuse of resources block 
+
+To connect to App server from web tier use curl http://privateip:80
